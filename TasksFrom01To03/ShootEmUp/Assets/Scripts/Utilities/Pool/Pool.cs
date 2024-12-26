@@ -2,7 +2,6 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-
 namespace ShootEmUp
 {
     public sealed class Pool<T> where T : Component
