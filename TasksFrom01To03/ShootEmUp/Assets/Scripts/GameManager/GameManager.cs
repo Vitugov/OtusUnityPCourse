@@ -31,6 +31,7 @@ namespace ShootEmUp
         [ContextMenu("Stop Game")]
         public void StopGame()
         {
+            Pause();
             _enemySpawner.StopSpawner();
             _enemyManager.UnspawnAll();
             _bulletManager.RemoveAllBullets();
@@ -39,6 +40,7 @@ namespace ShootEmUp
         [ContextMenu("Start Game")]
         public void StartGame()
         {
+            Resume();
             _character.LoadCharacterInitialState();
             _enemySpawner.RunSpawner();
         }

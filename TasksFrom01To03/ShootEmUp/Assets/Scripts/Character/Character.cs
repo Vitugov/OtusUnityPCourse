@@ -32,7 +32,6 @@ namespace ShootEmUp
         {
             _hitPointsComponent.HitPoints = _characterInitialData.HitPoints;
             transform.position = _characterInitialData.Position;
-
         }
 
         public void Deinitialize()
