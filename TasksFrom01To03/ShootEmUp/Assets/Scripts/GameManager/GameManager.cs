@@ -15,6 +15,18 @@ namespace ShootEmUp
             Time.timeScale = 0;
         }
 
+        [ContextMenu("Pause Game")]
+        public void Pause()
+        {
+            Time.timeScale = 0;
+        }
+
+        [ContextMenu("Resume Game")]
+        public void Resume()
+        {
+            Time.timeScale = 1;
+        }
+
         [ContextMenu("Stop Game")]
         public void StopGame()
         {
