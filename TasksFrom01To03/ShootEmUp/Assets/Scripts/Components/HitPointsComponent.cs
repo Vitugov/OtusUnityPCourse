@@ -10,6 +10,12 @@ namespace ShootEmUp
 
         [SerializeField] private int _hitPoints;
 
+        public int HitPoints
+        {
+            get => _hitPoints;
+            set => _hitPoints = value;
+        }
+
         public bool IsHitPointsExists()
         {
             return _hitPoints > 0;

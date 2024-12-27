@@ -8,6 +8,7 @@ namespace ShootEmUp
         [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private Character _character;
 
         public void FinishGame()
         {
@@ -38,6 +39,7 @@ namespace ShootEmUp
         [ContextMenu("Start Game")]
         public void StartGame()
         {
+            _character.LoadCharacterInitialState();
             _enemySpawner.RunSpawner();
         }
     }

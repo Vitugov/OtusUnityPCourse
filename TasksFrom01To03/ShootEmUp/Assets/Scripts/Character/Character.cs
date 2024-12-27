@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 
@@ -12,11 +13,26 @@ namespace ShootEmUp
         [SerializeField] private HitPointsComponent _hitPointsComponent;
         [SerializeField] private MoveWithRestrictions _moveWithRestrictions;
 
+        private CharacterData _characterInitialData;
+
         public void Initialize(IRestrictor restrictor, BulletManager bulletManager)
         {
             _moveWithRestrictions.Initialize(restrictor);
             _weaponComponent.Initialize(bulletManager);
+            SaveCharacterInitialState();
             _hitPointsComponent.HpEmpty += OnCharacterDeath;
+        }
+
+        public void SaveCharacterInitialState()
+        {
+            _characterInitialData = new CharacterData(_hitPointsComponent.HitPoints, transform.position);
+        }
+
+        public void LoadCharacterInitialState()
+        {
+            _hitPointsComponent.HitPoints = _characterInitialData.HitPoints;
+            transform.position = _characterInitialData.Position;
+
         }
 
         public void Deinitialize()
