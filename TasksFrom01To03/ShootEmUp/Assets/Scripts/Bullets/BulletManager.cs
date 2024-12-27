@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 
@@ -29,9 +30,9 @@ namespace ShootEmUp
             _bulletPool.Release(bullet);
         }
 
-        private void RemoveAllBullets()
+        public void RemoveAllBullets()
         {
-            var activeBullets = _bulletPool.GetActiveObjects();
+            var activeBullets = _bulletPool.GetActiveObjects().ToArray();
             foreach (var bullet in activeBullets)
             {
                 RemoveBullet(bullet);
