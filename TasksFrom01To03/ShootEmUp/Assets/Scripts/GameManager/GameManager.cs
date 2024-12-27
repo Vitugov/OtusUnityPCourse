@@ -7,7 +7,6 @@ namespace ShootEmUp
     {
         [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private EnemyManager _enemyManager;
-        [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private Character _character;
 
         public void FinishGame()
@@ -32,17 +31,15 @@ namespace ShootEmUp
         public void StopGame()
         {
             Pause();
-            _enemySpawner.StopSpawner();
-            _enemyManager.UnspawnAll();
-            _bulletManager.RemoveAllBullets();
         }
 
         [ContextMenu("Start Game")]
         public void StartGame()
         {
             Resume();
+            _bulletManager.RemoveAllBullets();
+            _enemyManager.UnspawnAll();
             _character.LoadCharacterInitialState();
-            _enemySpawner.RunSpawner();
         }
     }
 }

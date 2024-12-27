@@ -8,7 +8,7 @@ namespace ShootEmUp
     {
         event Action<GameObject> HpEmpty;
 
-        public int HitPoints {  get; set; }
+        public int HitPoints { get; set; }
         bool IsHitPointsExists();
         void TakeDamage(int damage);
     }
