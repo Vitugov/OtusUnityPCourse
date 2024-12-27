@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -5,15 +6,11 @@ namespace ShootEmUp
 {
     public sealed class CharacterController : MonoBehaviour
     {
+        public event Action CharacterDeath;
+
         [SerializeField] private Character _character;
         [SerializeField] private CharacterInitializer _characterInitializer;
         [SerializeField] private InputManager _inputManager;
-        [SerializeField] private GameManager _gameManager;
-
-        private void Awake()
-        {
-            _characterInitializer.Initialize(_character);
-        }
 
         private void OnEnable()
         {
@@ -49,7 +46,7 @@ namespace ShootEmUp
 
         private void OnCharacterDeath()
         {
-            _gameManager.FinishGame();
+            CharacterDeath?.Invoke();
         }
     }
 }
