@@ -15,22 +15,32 @@ namespace ShootEmUp
 
         private Coroutine _timerCoroutine;
 
+
         public void StartTimer()
         {
+            _timer.SetActive(true);
             _timerCoroutine = StartCoroutine(TimerCoroutine());
+        }
+
+        public void StopTimer()
+        {
+            if (_timerCoroutine != null)
+            {
+                StopCoroutine(_timerCoroutine);
+                _timerCoroutine = null;
+            }
         }
 
         private IEnumerator TimerCoroutine()
         {
-            _timer.SetActive(true);
             for (var timerCount = _initialCount; timerCount >= 0; timerCount--)
             {
                 _timerText.text = timerCount.ToString();
                 yield return new WaitForSecondsRealtime(1);
             }
             _timerText.text = "";
-            _timer.SetActive(false);
             TimerFinish?.Invoke();
+            _timer.SetActive(false);
             yield break;
         }
     }

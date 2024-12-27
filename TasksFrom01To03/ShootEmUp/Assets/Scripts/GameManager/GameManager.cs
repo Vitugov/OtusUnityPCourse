@@ -5,14 +5,17 @@ namespace ShootEmUp
 {
     public sealed class GameManager : MonoBehaviour
     {
+        [SerializeField] private InitialGameTimer _timer;
+        [SerializeField] private GameObject _gameOver;
         [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private Character _character;
 
         public void FinishGame()
         {
-            Debug.Log("Game over!");
-            Time.timeScale = 0;
+            _gameOver.SetActive(true);
+            Pause();
+            //Debug.Log("Game over!");
         }
 
         [ContextMenu("Pause Game")]
@@ -36,10 +39,12 @@ namespace ShootEmUp
         [ContextMenu("Start Game")]
         public void StartGame()
         {
-            Resume();
+            _gameOver.SetActive(false);
             _bulletManager.RemoveAllBullets();
             _enemyManager.UnspawnAll();
             _character.LoadCharacterInitialState();
+            _timer.TimerFinish += Resume;
+            _timer.StartTimer();
         }
     }
 }
