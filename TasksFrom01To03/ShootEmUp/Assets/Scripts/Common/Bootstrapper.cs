@@ -13,6 +13,7 @@ namespace ShootEmUp
         {
             _characterInitializer.Initialize(_character);
             _characterController.CharacterDeath += _gameManager.FinishGame;
+            _gameManager.PreStartGame();
         }
     }
 }
