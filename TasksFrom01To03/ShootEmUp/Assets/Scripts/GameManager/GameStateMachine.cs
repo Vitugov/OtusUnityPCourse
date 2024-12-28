@@ -5,20 +5,28 @@ namespace ShootEmUp
 {
     public class GameStateMachine
     {
-        public IGameState CurrentGameState { get; private set; }
+        public event Action<Type> OnExitState;
+        public event Action<Type> OnEnterState;
 
         private Dictionary<Type, IGameState> _gameStates;
+        private IGameState _currentGameState;
 
-        public GameStateMachine()
+        public IGameState CurrentGameState
         {
-            _gameStates = new Dictionary<Type, IGameState>
+            get => _currentGameState;
+            private set
             {
-                [typeof(IntroGameState)] = new IntroGameState(),
-                [typeof(CountdownGameState)] = new CountdownGameState(),
-                [typeof(PlayingGameState)] = new PlayingGameState(),
-                [typeof(PausedGameState)] = new PausedGameState(),
-                [typeof(GameOverGameState)] = new GameOverGameState(),
-            };
+                if (_currentGameState == value) return;
+
+                OnExitState?.Invoke(_currentGameState.GetType());
+                _currentGameState = value;
+                OnEnterState?.Invoke(_currentGameState.GetType());
+            }
+        }
+
+        public GameStateMachine(Dictionary<Type, IGameState> gameStates)
+        {
+            _gameStates = gameStates;
         }
 
         public void Enter<TState>() where TState : IGameState

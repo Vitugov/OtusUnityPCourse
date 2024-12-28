@@ -1,13 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ShootEmUp
 {
     public class UIManager : MonoBehaviour
     {
-        [SerializeField] private InitialGameTimer _timer;
-        [SerializeField] private GameObject _gameOverPanel;
-        [SerializeField] private StartGameButton _startGameButton;
-        [SerializeField] private ExitGameButton _exitGameButton;
-        [SerializeField] private PauseButton _pauseGameButton;
+        public event Action StartGameButtonPressed;
+        public event Action ExitGameButtonPressed;
+        public event Action PauseGameButtonPressed;
+        public event Action IntroTimerFinished;
+
+        public InitialGameTimer _timer;
+        public GameObject _gameOverPanel;
+        public GameButton _startGameButton;
+        public GameButton _exitGameButton;
+        public GameButton _pauseGameButton;
+        public GameButton _resumeGameButton;
+
+
+
     }
 }
