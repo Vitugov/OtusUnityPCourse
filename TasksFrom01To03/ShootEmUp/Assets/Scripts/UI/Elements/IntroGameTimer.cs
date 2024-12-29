@@ -5,18 +5,19 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class InitialGameTimer : MonoBehaviour
+    public class IntroGameTimer : MonoBehaviour
     {
-        [SerializeField] private GameObject _timer;
+        public event Action OnTimerFinished;
+
         [SerializeField] private TMP_Text _timerText;
-        [SerializeField] private int _initialCount;
+        [SerializeField] private int _initialCount = 3;
 
         private Coroutine _timerCoroutine;
 
-        public void StartTimer(Action onTimerFinished)
+        public void StartTimer()
         {
-            _timer.SetActive(true);
-            _timerCoroutine = StartCoroutine(TimerCoroutine(onTimerFinished));
+            gameObject.SetActive(true);
+            _timerCoroutine = StartCoroutine(TimerCoroutine());
         }
 
         public void StopTimer()
@@ -28,7 +29,7 @@ namespace ShootEmUp
             }
         }
 
-        private IEnumerator TimerCoroutine(Action onTimerFinished)
+        private IEnumerator TimerCoroutine()
         {
             for (var timerCount = _initialCount; timerCount >= 0; timerCount--)
             {
@@ -36,8 +37,8 @@ namespace ShootEmUp
                 yield return new WaitForSecondsRealtime(1);
             }
             _timerText.text = "";
-            _timer.SetActive(false);
-            onTimerFinished();
+            gameObject.SetActive(false);
+            OnTimerFinished?.Invoke();
             yield break;
         }
     }

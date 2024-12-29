@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour, IGameStartHandler
+    public sealed class EnemyManager : MonoBehaviour
     {
         [SerializeField] private EnemyInitializer _enemyInitializer;
         [SerializeField] private EnemyPoolInstancer _poolInstancer;
@@ -39,11 +39,6 @@ namespace ShootEmUp
             {
                 UnspawnEnemy(enemy);
             }
-        }
-
-        public void OnGameStart()
-        {
-            UnspawnAll();
         }
     }
 }

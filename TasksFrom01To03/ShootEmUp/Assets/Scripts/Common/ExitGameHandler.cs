@@ -11,8 +11,6 @@ namespace ShootEmUp
     {
         public void ExitGame()
         {
-            Debug.Log("Exiting game...");
-
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #else

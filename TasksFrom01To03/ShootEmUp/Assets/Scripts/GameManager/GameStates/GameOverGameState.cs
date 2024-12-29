@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace ShootEmUp
 {
@@ -6,12 +6,12 @@ namespace ShootEmUp
     {
         public void Enter()
         {
-            throw new NotImplementedException();
+            Time.timeScale = 0;
         }
 
         public void Exit()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

@@ -1,17 +1,17 @@
-﻿using System;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
     public sealed class IntroGameStateUIHandler : IGameStateUIHandler<IntroGameState>
     {
         public void EnterStateUI(UIManager uiManager)
         {
-            throw new NotImplementedException();
+            uiManager.SetActiveStartGameButton(true);
+            uiManager.SetActiveExitGameButton(true);
         }
 
         public void ExitStateUI(UIManager uiManager)
         {
-            throw new NotImplementedException();
+            uiManager.SetActiveStartGameButton(false);
+            uiManager.SetActiveExitGameButton(false);
         }
     }
 }

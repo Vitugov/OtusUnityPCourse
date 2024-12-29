@@ -8,6 +8,10 @@ namespace ShootEmUp
         private readonly Dictionary<Type, IGameStateUIHandler> _uiHandlers = new();
         private UIManager _uiManager;
 
+        public UIGameStateMachine(UIManager uIManager)
+        {
+            _uiManager = uIManager;
+        }
         public void RegisterUIHandler<TGameState>(IGameStateUIHandler<TGameState> handler) where TGameState : IGameState
         {
             _uiHandlers.Add(typeof(TGameState), handler);

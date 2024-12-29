@@ -1,15 +1,23 @@
-﻿namespace ShootEmUp
+﻿using UnityEngine;
+
+namespace ShootEmUp
 {
     public sealed class CountdownGameState : IGameState
     {
+        private LevelResetter _levelResetter;
+
+        public CountdownGameState(LevelResetter levelResetter)
+        {
+            _levelResetter = levelResetter;
+        }
         public void Enter()
         {
-            throw new System.NotImplementedException();
+            Time.timeScale = 0;
+            _levelResetter.ResetLevel();
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

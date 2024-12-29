@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Character : MonoBehaviour, IGameStartHandler
+    public sealed class Character : MonoBehaviour
     {
         public event Action OnDeath;
 
@@ -51,11 +51,6 @@ namespace ShootEmUp
         private void OnCharacterDeath(GameObject _)
         {
             OnDeath?.Invoke();
-        }
-
-        public void OnGameStart()
-        {
-            LoadCharacterInitialState();
         }
     }
 }

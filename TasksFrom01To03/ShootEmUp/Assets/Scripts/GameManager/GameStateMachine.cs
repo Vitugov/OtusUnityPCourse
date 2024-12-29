@@ -17,8 +17,10 @@ namespace ShootEmUp
             private set
             {
                 if (_currentGameState == value) return;
-
-                OnExitState?.Invoke(_currentGameState.GetType());
+                if (_currentGameState != null)
+                {
+                    OnExitState?.Invoke(_currentGameState.GetType());
+                }
                 _currentGameState = value;
                 OnEnterState?.Invoke(_currentGameState.GetType());
             }

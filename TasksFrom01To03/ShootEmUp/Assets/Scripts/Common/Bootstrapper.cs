@@ -7,13 +7,16 @@ namespace ShootEmUp
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Character _character;
         [SerializeField] private CharacterInitializer _characterInitializer;
-        [SerializeField] private GameManager _gameManager;
+        [SerializeField] private ExitGameHandler _exitGameHandler;
+        [SerializeField] private UIManager _uiManager;
+        [SerializeField] private LevelResetter _levelResetter;
+
+        private GameStateController _gameStateController;
 
         private void Awake()
         {
             _characterInitializer.Initialize(_character);
-            _characterController.CharacterDeath += _gameManager.FinishGame;
-            _gameManager.PreStartGame();
+            _gameStateController = new GameStateController(_uiManager, _characterController, _exitGameHandler, _levelResetter);
         }
     }
 }

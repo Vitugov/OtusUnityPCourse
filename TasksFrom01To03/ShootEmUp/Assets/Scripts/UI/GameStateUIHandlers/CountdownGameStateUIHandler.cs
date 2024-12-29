@@ -4,12 +4,12 @@
     {
         public void EnterStateUI(UIManager uiManager)
         {
-            throw new System.NotImplementedException();
+            uiManager.StartIntroTimer();
         }
 
         public void ExitStateUI(UIManager uiManager)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }
