@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    public class LevelResetter : MonoBehaviour
+    public sealed class LevelResetter : MonoBehaviour
     {
         [SerializeField] private BulletManager _bulletManager;
         [SerializeField] private EnemyManager _enemyManager;
@@ -10,9 +10,12 @@ namespace ShootEmUp
 
         public void ResetLevel()
         {
-            _bulletManager.RemoveAllBullets();
-            _enemyManager.UnspawnAll();
-            _character.LoadCharacterInitialState();
+            var reloadables = new IReloadable[] {_bulletManager, _enemyManager, _character};
+            
+            foreach (var reloadable in reloadables)
+            {
+                reloadable.Reload();
+            }
         }
     }
 }

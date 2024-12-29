@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class BulletManager : MonoBehaviour, IBulletSpawner
+    public sealed class BulletManager : MonoBehaviour, IBulletSpawner, IReloadable
     {
         [SerializeField] private LevelBounds _levelBounds;
         [SerializeField] private BulletPoolInstancer _bulletPoolInstancer;
@@ -23,6 +23,11 @@ namespace ShootEmUp
             bullet.BulletWorkIsDone += RemoveBullet;
         }
 
+        public void Reload()
+        {
+            RemoveAllBullets();
+        }
+
         private void RemoveBullet(Bullet bullet)
         {
             bullet.BulletWorkIsDone -= RemoveBullet;
@@ -30,7 +35,7 @@ namespace ShootEmUp
             _bulletPool.Release(bullet);
         }
 
-        public void RemoveAllBullets()
+        private void RemoveAllBullets()
         {
             var activeBullets = _bulletPool.GetActiveObjects().ToArray();
             foreach (var bullet in activeBullets)

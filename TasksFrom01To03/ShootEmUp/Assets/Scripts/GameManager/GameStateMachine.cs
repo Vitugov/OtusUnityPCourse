@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ShootEmUp
 {
-    public class GameStateMachine
+    public sealed class GameStateMachine
     {
         public event Action<Type> OnExitState;
         public event Action<Type> OnEnterState;

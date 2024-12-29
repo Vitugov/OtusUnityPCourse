@@ -10,6 +10,7 @@ namespace ShootEmUp
         {
             _levelResetter = levelResetter;
         }
+
         public void Enter()
         {
             Time.timeScale = 0;

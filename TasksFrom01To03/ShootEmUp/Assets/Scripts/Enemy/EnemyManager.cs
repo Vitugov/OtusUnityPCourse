@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemyManager : MonoBehaviour, IReloadable
     {
         [SerializeField] private EnemyInitializer _enemyInitializer;
         [SerializeField] private EnemyPoolInstancer _poolInstancer;
@@ -25,20 +25,25 @@ namespace ShootEmUp
             enemy.HpEmpty += UnspawnEnemy;
         }
 
-        private void UnspawnEnemy(Enemy enemy)
+        public void Reload()
         {
-            enemy.HpEmpty -= UnspawnEnemy;
-            _enemyInitializer.DeInitialize(enemy);
-            _enemyPool.Release(enemy);
+            UnspawnAll();
         }
 
-        public void UnspawnAll()
+        private void UnspawnAll()
         {
             var activeEnemies = _enemyPool.GetActiveObjects().ToArray();
             foreach (var enemy in activeEnemies)
             {
                 UnspawnEnemy(enemy);
             }
+        }
+
+        private void UnspawnEnemy(Enemy enemy)
+        {
+            enemy.HpEmpty -= UnspawnEnemy;
+            _enemyInitializer.DeInitialize(enemy);
+            _enemyPool.Release(enemy);
         }
     }
 }

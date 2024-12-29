@@ -7,7 +7,7 @@ using UnityEditor;
 namespace ShootEmUp
 {
 
-    public class ExitGameHandler : MonoBehaviour
+    public sealed class ExitGameHandler : MonoBehaviour
     {
         public void ExitGame()
         {

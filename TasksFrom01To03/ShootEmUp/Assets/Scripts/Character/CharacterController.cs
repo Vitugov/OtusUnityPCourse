@@ -12,6 +12,11 @@ namespace ShootEmUp
         [SerializeField] private CharacterInitializer _characterInitializer;
         [SerializeField] private InputManager _inputManager;
 
+        private void Awake()
+        {
+            _characterInitializer.Initialize(_character);
+        }
+
         private void OnEnable()
         {
             _inputManager.DirectionKeyPressed += OnMove;

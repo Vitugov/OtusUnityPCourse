@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class UIManager : MonoBehaviour
+    public sealed class UIManager : MonoBehaviour
     {
         public event Action StartGameButtonPressed;
         public event Action ExitGameButtonPressed;

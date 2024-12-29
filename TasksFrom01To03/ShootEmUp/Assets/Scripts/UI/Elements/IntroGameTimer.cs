@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class IntroGameTimer : MonoBehaviour
+    public sealed class IntroGameTimer : MonoBehaviour
     {
         public event Action OnTimerFinished;
 

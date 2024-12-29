@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Character : MonoBehaviour
+    public sealed class Character : MonoBehaviour, IReloadable
     {
         public event Action OnDeath;
 
@@ -22,15 +22,9 @@ namespace ShootEmUp
             _hitPointsComponent.HpEmpty += OnCharacterDeath;
         }
 
-        public void SaveCharacterInitialState()
+        public void Reload()
         {
-            _characterInitialData = new CharacterData(_hitPointsComponent.HitPoints, transform.position);
-        }
-
-        public void LoadCharacterInitialState()
-        {
-            _hitPointsComponent.HitPoints = _characterInitialData.HitPoints;
-            transform.position = _characterInitialData.Position;
+            LoadCharacterInitialState();
         }
 
         public void Deinitialize()
@@ -51,6 +45,17 @@ namespace ShootEmUp
         private void OnCharacterDeath(GameObject _)
         {
             OnDeath?.Invoke();
+        }
+
+        private void SaveCharacterInitialState()
+        {
+            _characterInitialData = new CharacterData(_hitPointsComponent.HitPoints, transform.position);
+        }
+
+        private void LoadCharacterInitialState()
+        {
+            _hitPointsComponent.HitPoints = _characterInitialData.HitPoints;
+            transform.position = _characterInitialData.Position;
         }
     }
 }

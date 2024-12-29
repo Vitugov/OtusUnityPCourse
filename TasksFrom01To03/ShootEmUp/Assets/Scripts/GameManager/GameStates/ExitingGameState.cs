@@ -1,6 +1,6 @@
 ﻿namespace ShootEmUp
 {
-    public class ExitingGameState : IGameState
+    public sealed class ExitingGameState : IGameState
     {
         private ExitGameHandler _exitGameHandler;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ShootEmUp
 {
-    public class GameButton : MonoBehaviour, IGameButton, IActivateableUI
+    public sealed class GameButton : MonoBehaviour, IGameButton, IActivateableUI
     {
         public event Action OnClick;
 

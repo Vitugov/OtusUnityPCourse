@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class ConditionHandler
+    public sealed class ConditionHandler
     {
         private readonly Predicate<GameObject> _condition;
         private readonly float _checkInterval;
