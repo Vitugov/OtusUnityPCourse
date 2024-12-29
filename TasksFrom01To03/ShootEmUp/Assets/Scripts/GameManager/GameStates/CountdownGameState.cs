@@ -15,9 +15,5 @@ namespace ShootEmUp
             Time.timeScale = 0;
             _levelResetter.ResetLevel();
         }
-
-        public void Exit()
-        {
-        }
     }
 }

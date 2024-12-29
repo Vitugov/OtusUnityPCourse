@@ -33,7 +33,6 @@ namespace ShootEmUp
 
         public void Enter<TState>() where TState : IGameState
         {
-            CurrentGameState?.Exit();
             CurrentGameState = _gameStates[typeof(TState)];
             CurrentGameState.Enter();
         }

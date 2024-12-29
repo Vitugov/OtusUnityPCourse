@@ -5,16 +5,13 @@ namespace ShootEmUp
 {
     public sealed class UIGameStateMachine
     {
-        private readonly Dictionary<Type, IGameStateUIHandler> _uiHandlers = new();
+        private readonly Dictionary<Type, IGameStateUIHandler> _uiHandlers;
         private UIManager _uiManager;
 
-        public UIGameStateMachine(UIManager uIManager)
+        public UIGameStateMachine(UIManager uIManager, Dictionary<Type, IGameStateUIHandler> uiHandlers)
         {
             _uiManager = uIManager;
-        }
-        public void RegisterUIHandler<TGameState>(IGameStateUIHandler<TGameState> handler) where TGameState : IGameState
-        {
-            _uiHandlers.Add(typeof(TGameState), handler);
+            _uiHandlers = uiHandlers;
         }
 
         public void EnterState(Type stateType)

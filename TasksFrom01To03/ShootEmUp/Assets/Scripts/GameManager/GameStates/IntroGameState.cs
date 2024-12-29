@@ -8,9 +8,5 @@ namespace ShootEmUp
         {
             Time.timeScale = 0;
         }
-
-        public void Exit()
-        {
-        }
     }
 }

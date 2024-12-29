@@ -1,6 +1,6 @@
 ﻿namespace ShootEmUp
 {
-    public sealed class IntroGameStateUIHandler : IGameStateUIHandler<IntroGameState>
+    public sealed class IntroGameStateUIHandler : IGameStateUIHandler
     {
         public void EnterStateUI(UIManager uiManager)
         {
