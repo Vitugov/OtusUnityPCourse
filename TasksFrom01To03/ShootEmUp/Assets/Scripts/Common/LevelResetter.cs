@@ -10,8 +10,8 @@ namespace ShootEmUp
 
         public void ResetLevel()
         {
-            var reloadables = new IReloadable[] {_bulletManager, _enemyManager, _character};
-            
+            var reloadables = new IReloadable[] { _bulletManager, _enemyManager, _character };
+
             foreach (var reloadable in reloadables)
             {
                 reloadable.Reload();

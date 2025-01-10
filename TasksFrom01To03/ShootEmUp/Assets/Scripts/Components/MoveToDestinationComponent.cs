@@ -13,25 +13,25 @@ namespace ShootEmUp
 
         [SerializeField] private MoveComponent _moveComponent;
 
-        private ConditionHandler _destinationAchievedChecker;
+        private ConditionalCoroutineHandler _destinationAchievedChecker;
 
         public void SetDestination(Vector2 destiantion)
         {
             _moveComponent.MoveInDirectionToPoint(destiantion);
-            _destinationAchievedChecker = new ConditionHandler(IsDesinationAchieved, CHECK_INTERVAL, DestinationIsReached, true);
+            _destinationAchievedChecker = new ConditionalCoroutineHandler(this, IsDesinationAchieved, CHECK_INTERVAL, DestinationIsReached, true);
 
             bool IsDesinationAchieved(GameObject obj) => ((Vector2)transform.position - destiantion).magnitude < TRESHHOLD;
         }
 
         public void StartMove()
         {
-            _destinationAchievedChecker.Start(this, gameObject);
+            _destinationAchievedChecker.Start(gameObject);
         }
 
         public void StopMove()
         {
             _moveComponent.MoveInDirection(Vector2.zero);
-            _destinationAchievedChecker?.Stop(this);
+            _destinationAchievedChecker?.Stop();
             _destinationAchievedChecker = null;
         }
 

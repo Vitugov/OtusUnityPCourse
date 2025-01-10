@@ -8,7 +8,7 @@ namespace ShootEmUp
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private int _maxActiveEnemyCount = 8;
 
-        private ConditionHandler _spawnerCoroutine;
+        private ConditionalCoroutineHandler _spawnerCoroutine;
 
         private void Start()
         {
@@ -17,7 +17,7 @@ namespace ShootEmUp
 
         public void RunSpawner()
         {
-            _spawnerCoroutine = new ConditionHandler(predicate, 1f, _enemyManager.SpawnEnemy, false);
+            _spawnerCoroutine = new ConditionalCoroutineHandler(predicate, 1f, _enemyManager.SpawnEnemy, false);
             _spawnerCoroutine.Start(this, gameObject);
 
             bool predicate(GameObject obj) => _enemyManager.ActiveEnemyCount < _maxActiveEnemyCount;

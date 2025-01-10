@@ -11,7 +11,8 @@ namespace ShootEmUp
         [SerializeField] private float _countdown;
 
         private GameObject _target;
-        private ConditionHandler _fireHandler;
+        private IHitPoints _targetHitPoints;
+        private ConditionalCoroutineHandler _fireHandler;
 
         public void Initialize(GameObject target)
         {
@@ -19,19 +20,23 @@ namespace ShootEmUp
             CreateFireHandler();
         }
 
-        public void ChangeTarget(GameObject target) => _target = target;
+        public void ChangeTarget(GameObject target)
+        {
+            _target = target;
+            _targetHitPoints = target.GetComponent<IHitPoints>();
+        }
 
-        public void StartFire() => _fireHandler?.Start(this, gameObject);
+        public void StartFire() => _fireHandler?.Start(gameObject);
 
-        public void StopFire() => _fireHandler?.Stop(this);
+        public void StopFire() => _fireHandler?.Stop();
 
         private void Fire() => FireEvent?.Invoke(_target.transform);
 
-        private bool ShouldFire(GameObject obj) => _target.GetComponent<IHitPoints>().IsHitPointsExists();
+        private bool ShouldFire(GameObject gameObject) => _targetHitPoints.IsHitPointsExists();
 
         private void CreateFireHandler()
         {
-            _fireHandler = new ConditionHandler(ShouldFire, _countdown, Fire, false);
+            _fireHandler = new ConditionalCoroutineHandler(this, ShouldFire, _countdown, Fire, false);
         }
     }
 }
