@@ -2,6 +2,6 @@
 {
     public interface IBulletSpawner
     {
-        void CreateBullet(BulletArgs args);
+        void CreateBullet(BulletConfig config, BulletArgs args);
     }
 }

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5568771391735819373}
   - component: {fileID: 2940379802828104012}
   - component: {fileID: 6236023762962156127}
-  - component: {fileID: 6049806485052948249}
+  - component: {fileID: 2100591357859238413}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d798542888925459324a15eec289fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveComponent: {fileID: 6049806485052948249}
+  _moveComponent: {fileID: 2100591357859238413}
 --- !u!114 &5568771391735819374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countdown: 2
---- !u!114 &6049806485052948249
+--- !u!114 &2100591357859238413
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 559606060570185700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3abd66c969dfe34aa89f75cbdad9c1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 017ece6bcb2ab6144ba66d1ef174faaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody2D: {fileID: 659620479434099170}

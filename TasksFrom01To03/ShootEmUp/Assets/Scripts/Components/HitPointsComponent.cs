@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class HitPointsComponent : MonoBehaviour, IHitPoints

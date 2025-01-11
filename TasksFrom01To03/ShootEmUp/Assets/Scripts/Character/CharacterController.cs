@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class CharacterController : MonoBehaviour
@@ -39,19 +38,10 @@ namespace ShootEmUp
             }
         }
 
-        private void OnMove(Vector2 direction)
-        {
-            _character.Move(direction, Time.fixedDeltaTime);
-        }
+        private void OnMove(Vector2 direction) => _character.Move(direction);
 
-        private void OnFire()
-        {
-            _character.Fire();
-        }
+        private void OnFire() => _character.Fire();
 
-        private void OnCharacterDeath()
-        {
-            CharacterDeath?.Invoke();
-        }
+        private void OnCharacterDeath() => CharacterDeath?.Invoke();
     }
 }

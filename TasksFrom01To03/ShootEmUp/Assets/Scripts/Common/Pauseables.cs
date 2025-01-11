@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    public class Pauseables : MonoBehaviour
+    public sealed class Pauseables : MonoBehaviour
     {
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private BulletManager _bulletManager;

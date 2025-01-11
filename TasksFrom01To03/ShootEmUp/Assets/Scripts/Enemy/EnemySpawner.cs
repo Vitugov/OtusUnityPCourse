@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class EnemySpawner : MonoBehaviour
@@ -8,7 +7,7 @@ namespace ShootEmUp
         [SerializeField] private CoroutineManager _coroutineManager;
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private int _maxActiveEnemyCount = 8;
-        
+
         private ICoroutineHandler _spawnerCoroutine;
 
         private void Start()

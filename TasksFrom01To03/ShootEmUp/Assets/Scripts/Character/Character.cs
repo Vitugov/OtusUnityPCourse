@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class Character : MonoBehaviour, IReloadable
@@ -32,9 +31,9 @@ namespace ShootEmUp
             _hitPointsComponent.HpEmpty -= OnCharacterDeath;
         }
 
-        public void Move(Vector2 direction, float deltaTime)
+        public void Move(Vector2 direction)
         {
-            _moveWithRestrictions.Move(direction, deltaTime);
+            _moveWithRestrictions.Move(direction);
         }
 
         public void Fire()

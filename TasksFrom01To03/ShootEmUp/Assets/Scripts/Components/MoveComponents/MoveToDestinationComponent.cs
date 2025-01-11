@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class MoveToDestinationComponent : MonoBehaviour
@@ -11,7 +10,7 @@ namespace ShootEmUp
         private const float CHECK_INTERVAL = 0.05f;
         private const double TRESHHOLD = 0.25;
 
-        [SerializeField] private NewMoveComponent _moveComponent;
+        [SerializeField] private MoveComponent _moveComponent;
 
         private CoroutineManager _coroutineManager;
         private ICoroutineHandler _destinationAchievedChecker;

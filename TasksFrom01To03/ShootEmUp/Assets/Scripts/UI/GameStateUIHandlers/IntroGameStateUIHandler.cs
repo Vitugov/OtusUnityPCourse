@@ -2,16 +2,14 @@
 {
     public sealed class IntroGameStateUIHandler : IGameStateUIHandler
     {
-        public void EnterStateUI(UIManager uiManager)
-        {
-            uiManager.SetActiveStartGameButton(true);
-            uiManager.SetActiveExitGameButton(true);
-        }
+        public void EnterStateUI(UIManager uiManager) => ChangeActivity(uiManager, true);
 
-        public void ExitStateUI(UIManager uiManager)
+        public void ExitStateUI(UIManager uiManager) => ChangeActivity(uiManager, false);
+
+        private void ChangeActivity(UIManager uiManager, bool isActive)
         {
-            uiManager.SetActiveStartGameButton(false);
-            uiManager.SetActiveExitGameButton(false);
+            uiManager.SetActiveStartGameButton(isActive);
+            uiManager.SetActiveExitGameButton(isActive);
         }
     }
 }

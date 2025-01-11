@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public class PoolInstancer<T> : MonoBehaviour where T : MonoBehaviour

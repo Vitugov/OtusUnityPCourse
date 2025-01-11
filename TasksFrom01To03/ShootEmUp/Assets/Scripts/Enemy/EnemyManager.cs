@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class EnemyManager : MonoBehaviour, IReloadable

@@ -2,7 +2,7 @@
 
 namespace ShootEmUp
 {
-    public sealed class NewMoveComponent : MonoBehaviour
+    public sealed class MoveComponent : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
@@ -15,7 +15,7 @@ namespace ShootEmUp
 
         public Vector2 CalculateNextPosition(Vector2 movementDirection)
         {
-            return _rigidbody2D.position + Speed * Time.deltaTime * movementDirection;
+            return _rigidbody2D.position + Speed * Time.fixedDeltaTime * movementDirection;
         }
 
         public void MoveInDirection(Vector2 direction)

@@ -1,13 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class Enemy : MonoBehaviour
     {
         public event Action<Enemy> HpEmpty;
-
 
         [SerializeField] private MoveToDestinationComponent _moveToDestinationComponent;
         [SerializeField] private HitPointsComponent _hitPointsComponent;

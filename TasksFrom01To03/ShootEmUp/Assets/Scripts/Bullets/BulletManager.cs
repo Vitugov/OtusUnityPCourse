@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class BulletManager : MonoBehaviour, IBulletSpawner, IReloadable, IPauseable
@@ -20,7 +19,7 @@ namespace ShootEmUp
             _bulletRemover = new BulletRemover(RemoveBullet);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (IsPaused) return;
             _bulletRemover.RemoveBulletsInSet();
@@ -36,10 +35,10 @@ namespace ShootEmUp
             }
         }
 
-        public void CreateBullet(BulletArgs args)
+        public void CreateBullet(BulletConfig config, BulletArgs args)
         {
             var bullet = _bulletPool.Get();
-            bullet.Initialize(args, _levelBounds);
+            bullet.Initialize(args, config, _levelBounds);
             bullet.BulletWorkIsDone += _bulletRemover.AddToRemoveSet;
         }
 

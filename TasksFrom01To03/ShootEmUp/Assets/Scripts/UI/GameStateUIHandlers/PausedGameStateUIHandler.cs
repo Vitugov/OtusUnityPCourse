@@ -2,18 +2,15 @@
 {
     public sealed class PausedGameStateUIHandler : IGameStateUIHandler
     {
-        public void EnterStateUI(UIManager uiManager)
-        {
-            uiManager.SetActiveResumeGameButton(true);
-            uiManager.SetActiveStartGameButton(true);
-            uiManager.SetActiveExitGameButton(true);
-        }
+        public void EnterStateUI(UIManager uiManager) => ChangeActivity(uiManager, true);
 
-        public void ExitStateUI(UIManager uiManager)
+        public void ExitStateUI(UIManager uiManager) => ChangeActivity(uiManager, false);
+
+        private void ChangeActivity(UIManager uiManager, bool isActive)
         {
-            uiManager.SetActiveResumeGameButton(false);
-            uiManager.SetActiveStartGameButton(false);
-            uiManager.SetActiveExitGameButton(false);
+            uiManager.SetActiveResumeGameButton(isActive);
+            uiManager.SetActiveStartGameButton(isActive);
+            uiManager.SetActiveExitGameButton(isActive);
         }
     }
 }

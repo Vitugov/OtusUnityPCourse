@@ -1,27 +1,25 @@
 ﻿using System;
 using UnityEngine;
 
-
 namespace ShootEmUp
 {
     public sealed class OutOfBoundsNotifier : MonoBehaviour
     {
-        private const float CHECK_INTERVAL = 1f;
-        private ConditionalCoroutineHandler _conditionHandler;
+        public event Action OutOfBounds;
 
-        public void InitializeAndStart(LevelBounds levelBounds, Action onOutOfBounds)
+        private LevelBounds _levelBounds;
+
+        public void Initialize(LevelBounds levelBounds)
         {
-            _conditionHandler = new ConditionalCoroutineHandler(this, condition, CHECK_INTERVAL, onOutOfBounds, true);
-            _conditionHandler.Start(gameObject);
-
-            bool condition(GameObject obj) => !levelBounds.InBounds(obj.transform.position);
+            _levelBounds = levelBounds;
         }
 
-        public void Cleanup()
+        public void Tick()
         {
-            _conditionHandler?.Stop();
-            _conditionHandler = null;
+            if (!_levelBounds.InBounds(transform.position))
+            {
+                OutOfBounds?.Invoke();
+            }
         }
     }
 }
-

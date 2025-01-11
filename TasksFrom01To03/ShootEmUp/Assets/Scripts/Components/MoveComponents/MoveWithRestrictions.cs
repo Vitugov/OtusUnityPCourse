@@ -5,6 +5,7 @@ namespace ShootEmUp
     public sealed class MoveWithRestrictions : MonoBehaviour
     {
         [SerializeField] private MoveComponent _moveComponent;
+        
         private IRestrictor _restrictor;
 
         public void Initialize(IRestrictor restrictor)
@@ -12,9 +13,9 @@ namespace ShootEmUp
             _restrictor = restrictor;
         }
 
-        public void Move(Vector2 direction, float deltaTime)
+        public void Move(Vector2 direction)
         {
-            var nextPosition = _moveComponent.CalculateNextPosition(direction, deltaTime);
+            var nextPosition = _moveComponent.CalculateNextPosition(direction);
             var restrictedPosition = _restrictor.Restrict(nextPosition);
             _moveComponent.MoveTo(restrictedPosition);
         }

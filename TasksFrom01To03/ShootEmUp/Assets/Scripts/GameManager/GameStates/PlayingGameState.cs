@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace ShootEmUp
+﻿namespace ShootEmUp
 {
     public sealed class PlayingGameState : IGameState
     {
