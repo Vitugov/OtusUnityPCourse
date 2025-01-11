@@ -4,13 +4,17 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class InputManager : MonoBehaviour, IPauseable
     {
         public event Action SpacePressed;
         public event Action<Vector2> DirectionKeyPressed;
 
+        public bool IsPaused { get; set; }
+
         private void Update()
         {
+            if (IsPaused) return;
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SpacePressed?.Invoke();

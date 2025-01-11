@@ -1,26 +1,25 @@
-﻿using ShootEmUp;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Utilities
+namespace ShootEmUp
 {
-    public sealed class CoroutineManager
+    public sealed class CoroutineManager : MonoBehaviour
     {
         private MonoBehaviour _coroutineOwner;
         private readonly HashSet<ICoroutineHandler> _coroutineHandlers;
 
         public IReadOnlyCollection<ICoroutineHandler> CoroutineHandlers => _coroutineHandlers;
 
-        public CoroutineManager(MonoBehaviour corutineOwner)
+        public CoroutineManager()
         {
-            _coroutineOwner = corutineOwner;
+            _coroutineOwner = this;
             _coroutineHandlers = new();
         }
 
         public ICoroutineHandler GetCoroutineHandler(ICoroutineLogic coroutineLogic)
         {
             var conditionHandler = new CoroutineHandler(_coroutineOwner, coroutineLogic);
-            conditionHandler.CoroutineFinished += () => StopCoroutine(conditionHandler);
+            conditionHandler.CoroutineFinished += () => ExcludeCoroutine(conditionHandler);
             _coroutineHandlers.Add(conditionHandler);
             return conditionHandler;
         }
@@ -32,8 +31,13 @@ namespace Assets.Scripts.Utilities
 
         public void StopCoroutine(ICoroutineHandler conditionHandler)
         {
-            conditionHandler.CoroutineFinished -= () => StopCoroutine(conditionHandler);
-            conditionHandler.Stop();
+            ExcludeCoroutine(conditionHandler);
+            conditionHandler?.Stop();
+        }
+
+        private void ExcludeCoroutine(ICoroutineHandler conditionHandler)
+        {
+            conditionHandler.CoroutineFinished -= () => ExcludeCoroutine(conditionHandler);
             _coroutineHandlers.Remove(conditionHandler);
         }
     }

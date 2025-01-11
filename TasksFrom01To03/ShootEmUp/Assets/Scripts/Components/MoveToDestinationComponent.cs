@@ -6,39 +6,55 @@ namespace ShootEmUp
 {
     public sealed class MoveToDestinationComponent : MonoBehaviour
     {
-        public event Action DestinationIsReachedEvent;
+        public event Action DestinationReached;
 
         private const float CHECK_INTERVAL = 0.05f;
         private const double TRESHHOLD = 0.25;
 
-        [SerializeField] private MoveComponent _moveComponent;
+        [SerializeField] private NewMoveComponent _moveComponent;
 
-        private ConditionalCoroutineHandler _destinationAchievedChecker;
+        private CoroutineManager _coroutineManager;
+        private ICoroutineHandler _destinationAchievedChecker;
+        private ICoroutineHandler _toDestinationMover;
 
-        public void SetDestination(Vector2 destiantion)
+        private bool _isActive;
+
+        public void Initialize(CoroutineManager coroutineManager, Vector2 destination)
         {
-            _moveComponent.MoveInDirectionToPoint(destiantion);
-            _destinationAchievedChecker = new ConditionalCoroutineHandler(this, IsDesinationAchieved, CHECK_INTERVAL, DestinationIsReached, true);
+            _isActive = true;
+            _coroutineManager = coroutineManager;
+            var moveCoroutineLogic = new ActionCoroutineLogic(gameObject => _moveComponent.MoveInDirectionToPoint(destination));
+            _toDestinationMover = _coroutineManager.GetCoroutineHandler(moveCoroutineLogic);
 
-            bool IsDesinationAchieved(GameObject obj) => ((Vector2)transform.position - destiantion).magnitude < TRESHHOLD;
+            var checkCoroutineLogick = new ConditionalCoroutineLogic(IsDesinationAchieved, CHECK_INTERVAL, DestinationIsReached, true);
+            _destinationAchievedChecker = _coroutineManager.GetCoroutineHandler(checkCoroutineLogick);
+
+            bool IsDesinationAchieved(GameObject obj) => ((Vector2)transform.position - destination).magnitude < TRESHHOLD;
         }
 
         public void StartMove()
         {
-            _destinationAchievedChecker.Start(gameObject);
+            _coroutineManager.StartCoroutine(_toDestinationMover, gameObject);
+            _coroutineManager.StartCoroutine(_destinationAchievedChecker, gameObject);
         }
 
         public void StopMove()
         {
-            _moveComponent.MoveInDirection(Vector2.zero);
-            _destinationAchievedChecker?.Stop();
-            _destinationAchievedChecker = null;
+            if (_isActive)
+            {
+                _coroutineManager.StopCoroutine(_toDestinationMover);
+                _toDestinationMover = null;
+
+                _coroutineManager.StopCoroutine(_destinationAchievedChecker);
+                _destinationAchievedChecker = null;
+                _isActive = false;
+            }
         }
 
         private void DestinationIsReached()
         {
             StopMove();
-            DestinationIsReachedEvent?.Invoke();
+            DestinationReached?.Invoke();
         }
     }
 }

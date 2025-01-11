@@ -5,10 +5,11 @@ namespace ShootEmUp
 {
     public sealed class EnemySpawner : MonoBehaviour
     {
+        [SerializeField] private CoroutineManager _coroutineManager;
         [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private int _maxActiveEnemyCount = 8;
-
-        private ConditionalCoroutineHandler _spawnerCoroutine;
+        
+        private ICoroutineHandler _spawnerCoroutine;
 
         private void Start()
         {
@@ -17,8 +18,9 @@ namespace ShootEmUp
 
         public void RunSpawner()
         {
-            _spawnerCoroutine = new ConditionalCoroutineHandler(predicate, 1f, _enemyManager.SpawnEnemy, false);
-            _spawnerCoroutine.Start(this, gameObject);
+            var coroutineLogic = new ConditionalCoroutineLogic(predicate, 1f, _enemyManager.SpawnEnemy, false);
+            _spawnerCoroutine = _coroutineManager.GetCoroutineHandler(coroutineLogic);
+            _coroutineManager.StartCoroutine(_spawnerCoroutine, gameObject);
 
             bool predicate(GameObject obj) => _enemyManager.ActiveEnemyCount < _maxActiveEnemyCount;
         }
@@ -27,7 +29,7 @@ namespace ShootEmUp
         {
             if (_spawnerCoroutine != null)
             {
-                _spawnerCoroutine.Stop(this);
+                _spawnerCoroutine.Stop();
                 _spawnerCoroutine = null;
             }
         }

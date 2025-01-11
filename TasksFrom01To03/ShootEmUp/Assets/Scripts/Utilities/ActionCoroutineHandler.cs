@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class ActionCoroutineHandler : ICoroutineHandler
+    public sealed class ActionCoroutineHandler
     {
         public event Action CoroutineFinished;
 

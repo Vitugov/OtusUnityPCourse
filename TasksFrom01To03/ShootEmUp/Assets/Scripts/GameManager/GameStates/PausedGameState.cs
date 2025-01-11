@@ -4,9 +4,16 @@ namespace ShootEmUp
 {
     public sealed class PausedGameState : IGameState
     {
+        private readonly Pauseables _pauseables;
+
+        public PausedGameState(Pauseables pauseables)
+        {
+            _pauseables = pauseables;
+        }
+
         public void Enter()
         {
-            Time.timeScale = 0;
+            _pauseables.Pause();
         }
     }
 }

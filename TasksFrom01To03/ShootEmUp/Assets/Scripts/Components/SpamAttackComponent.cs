@@ -10,14 +10,16 @@ namespace ShootEmUp
 
         [SerializeField] private float _countdown;
 
+        private CoroutineManager _coroutineManager;
         private GameObject _target;
         private IHitPoints _targetHitPoints;
-        private ConditionalCoroutineHandler _fireHandler;
+        private ICoroutineHandler _fireHandler;
 
-        public void Initialize(GameObject target)
+        public void Initialize(CoroutineManager coroutineManager, GameObject target)
         {
+            _coroutineManager = coroutineManager;
             ChangeTarget(target);
-            CreateFireHandler();
+            CreateFireHandler(_coroutineManager);
         }
 
         public void ChangeTarget(GameObject target)
@@ -26,17 +28,18 @@ namespace ShootEmUp
             _targetHitPoints = target.GetComponent<IHitPoints>();
         }
 
-        public void StartFire() => _fireHandler?.Start(gameObject);
+        public void StartFire() => _coroutineManager.StartCoroutine(_fireHandler, gameObject);
 
-        public void StopFire() => _fireHandler?.Stop();
+        public void StopFire() => _coroutineManager.StopCoroutine(_fireHandler);
 
         private void Fire() => FireEvent?.Invoke(_target.transform);
 
-        private bool ShouldFire(GameObject gameObject) => _targetHitPoints.IsHitPointsExists();
-
-        private void CreateFireHandler()
+        private void CreateFireHandler(CoroutineManager coroutineManager)
         {
-            _fireHandler = new ConditionalCoroutineHandler(this, ShouldFire, _countdown, Fire, false);
+            var logic = new ConditionalCoroutineLogic(ShouldFire, _countdown, Fire, false);
+            _fireHandler = coroutineManager.GetCoroutineHandler(logic);
         }
+
+        private bool ShouldFire(GameObject gameObject) => _targetHitPoints.IsHitPointsExists();
     }
 }

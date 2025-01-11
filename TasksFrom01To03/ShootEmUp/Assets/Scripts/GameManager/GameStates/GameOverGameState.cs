@@ -1,12 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ShootEmUp
 {
     public sealed class GameOverGameState : IGameState
     {
+        private readonly Pauseables _pauseables;
+
+        public GameOverGameState(Pauseables pauseables)
+        {
+            _pauseables = pauseables;
+        }
+
         public void Enter()
         {
-            Time.timeScale = 0;
+            _pauseables.Pause();
         }
     }
 }

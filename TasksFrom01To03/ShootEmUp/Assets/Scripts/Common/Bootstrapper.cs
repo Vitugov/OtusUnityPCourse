@@ -23,8 +23,12 @@ namespace ShootEmUp
 
             _gameUIStateSynchronizer = new GameUIStateSynchronizer(_gameStateMachine, _uiGameStateMachine);
             _gameStateEventBinder = new GameStateEventBinder(_gameStateMachine, _uiManager, _characterController);
+        }
 
+        private void Start()
+        {
             _gameStateMachine.Enter<IntroGameState>();
+
         }
     }
 }

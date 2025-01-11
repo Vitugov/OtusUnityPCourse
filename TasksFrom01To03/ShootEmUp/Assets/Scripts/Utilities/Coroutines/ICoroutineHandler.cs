@@ -6,10 +6,8 @@ namespace ShootEmUp
     public interface ICoroutineHandler
     {
         event Action CoroutineFinished;
-        public bool IsPaused { get; }
+        public bool IsPaused { get; set; }
         void Start(GameObject target);
-        void Pause();
-        void Resume();
         void Stop();
     }
 }

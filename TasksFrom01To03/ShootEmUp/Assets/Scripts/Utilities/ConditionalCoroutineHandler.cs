@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class ConditionalCoroutineHandler : ICoroutineHandler
+    public sealed class ConditionalCoroutineHandler
     {
         public event Action CoroutineFinished;
 
@@ -57,7 +57,10 @@ namespace ShootEmUp
         {
             if (value && !_isFinished)
             {
-                _owner.StopCoroutine(_coroutine);
+                if (_coroutine != null)
+                {
+                    _owner.StopCoroutine(_coroutine);
+                }
                 CoroutineFinished?.Invoke();
                 _coroutine = null;
                 _isFinished = true;

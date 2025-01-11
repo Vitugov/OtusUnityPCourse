@@ -11,10 +11,10 @@ namespace ShootEmUp
         private readonly ICoroutineLogic _logic;
 
         private Coroutine _coroutine;
-        
+
         public bool IsFinished { get; private set; }
 
-        public bool IsPaused { get; private set; }
+        public bool IsPaused { get; set; }
 
         public CoroutineHandler(MonoBehaviour owner, ICoroutineLogic logic)
         {
@@ -32,21 +32,16 @@ namespace ShootEmUp
         {
             if (!IsFinished)
             {
-                _owner.StopCoroutine(_coroutine);
-                CoroutineFinished?.Invoke();
-                _coroutine = null;
                 IsFinished = true;
+
+                if (_coroutine != null)
+                {
+                    _owner.StopCoroutine(_coroutine);
+                    _coroutine = null;
+                }
+
+                CoroutineFinished?.Invoke();
             }
-        }
-
-        public void Pause()
-        {
-            IsPaused = true;
-        }
-
-        public void Resume()
-        {
-            IsPaused = false;
         }
     }
 }
