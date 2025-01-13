@@ -14,27 +14,33 @@ namespace ShootEmUp
         [SerializeField] private TeamComponent _teamComponent;
         [SerializeField] private DamagerComponent _damagerComponent;
 
-        public void Initialize(BulletArgs args, BulletConfig config, LevelBounds levelBounds)
+        private LevelBounds _levelBounds;
+
+        public void Initialize(CoroutineManager coroutineManager, LevelBounds levelBounds)
+        {
+            _levelBounds = levelBounds;
+            _moveInDirectionComponent.Initialize(coroutineManager);
+            _outOfBoundsNotifier.Initialize(coroutineManager);
+        }
+
+        public void Setup(BulletArgs args, BulletConfig config)
         {
             SetPosition(args.Position);
-            SetDirection(args.Direction);
             SetSpeed(config.Speed);
             SetPhysicsLayer((int)config.PhysicsLayer);
             SetColor(config.Color);
             SetTeam(config.IsPlayer);
             SetDamage(config.Damage);
-            _outOfBoundsNotifier.Initialize(levelBounds);
+
+            _moveInDirectionComponent.MoveToDirection(args.Direction);
+            _outOfBoundsNotifier.StartNotifier(_levelBounds);
             _outOfBoundsNotifier.OutOfBounds += InvokeBulletWorkIsDone;
         }
 
-        public void Tick()
+        public void Stop()
         {
-            _moveInDirectionComponent.Tick();
-            _outOfBoundsNotifier.Tick();
-        }
-
-        public void DeInitialize()
-        {
+            _moveInDirectionComponent.Stop();
+            _outOfBoundsNotifier.Stop();
             _outOfBoundsNotifier.OutOfBounds -= InvokeBulletWorkIsDone;
         }
 
@@ -47,7 +53,6 @@ namespace ShootEmUp
         private void InvokeBulletWorkIsDone() => BulletWorkIsDone?.Invoke(this);
 
         private void SetPosition(Vector3 position) => transform.position = position;
-        private void SetDirection(Vector2 direction) => _moveInDirectionComponent.Initialize(direction);
         private void SetSpeed(float speed) => _moveComponent.Speed = speed;
         private void SetPhysicsLayer(int physicsLayer) => gameObject.layer = physicsLayer;
         private void SetColor(Color color) => _spriteRenderer.color = color;

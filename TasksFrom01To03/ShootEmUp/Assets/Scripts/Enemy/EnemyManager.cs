@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour, IReloadable
+    public sealed class EnemyManager : MonoBehaviour, IResettable
     {
         [SerializeField] private EnemyInitializer _enemyInitializer;
         [SerializeField] private EnemyPoolInstancer _poolInstancer;
@@ -24,7 +24,7 @@ namespace ShootEmUp
             enemy.HpEmpty += UnspawnEnemy;
         }
 
-        public void Reload()
+        void IResettable.Reset()
         {
             UnspawnAll();
         }

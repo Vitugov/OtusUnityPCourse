@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class ActionCoroutineLogic : ICoroutineLogic
+    public class ActionCoroutineLogic<T> : ICoroutineLogic<T>
     {
         private ICoroutineHandler _handler;
-        private GameObject _target;
-        private readonly Action<GameObject> _action;
+        private T _target;
+        private readonly Action<T> _action;
 
-        public ActionCoroutineLogic(Action<GameObject> action)
+        public ActionCoroutineLogic(Action<T> action)
         {
             _action = action;
         }
 
-        public void Initialize(ICoroutineHandler handler, GameObject target)
+        public void Initialize(ICoroutineHandler handler, T target)
         {
             _handler = handler;
             _target = target;
@@ -32,5 +32,6 @@ namespace ShootEmUp
                 yield return new WaitForFixedUpdate();
             }
         }
+
     }
 }

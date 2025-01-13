@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class ConditionalCoroutineLogic : ICoroutineLogic
+    public class ConditionalCoroutineLogic<T> : ICoroutineLogic<T>
     {
         private ICoroutineHandler _handler;
-        private GameObject _target;
-        private readonly Predicate<GameObject> _condition;
+        private T _target;
+        private readonly Predicate<T> _condition;
         private readonly float _checkInterval;
         private readonly Action _onConditionMet;
         private readonly bool _stopOnConditionMet;
 
-        public ConditionalCoroutineLogic(Predicate<GameObject> condition, float checkInterval, Action onConditionMet, bool stopOnConditionMet)
+        public ConditionalCoroutineLogic(Predicate<T> condition, float checkInterval, Action onConditionMet, bool stopOnConditionMet)
         {
             _condition = condition;
             _checkInterval = checkInterval;
@@ -21,7 +21,7 @@ namespace ShootEmUp
             _stopOnConditionMet = stopOnConditionMet;
         }
 
-        public void Initialize(ICoroutineHandler handler, GameObject target)
+        public void Initialize(ICoroutineHandler handler, T target)
         {
             _handler = handler;
             _target = target;
@@ -43,5 +43,6 @@ namespace ShootEmUp
                 yield return new WaitForSeconds(_checkInterval);
             }
         }
+
     }
 }

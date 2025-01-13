@@ -13,20 +13,23 @@ namespace ShootEmUp
             _rigidbody2D.MovePosition(targetPosition);
         }
 
+        public Vector2 Position => _rigidbody2D.position;
+
         public Vector2 CalculateNextPosition(Vector2 movementDirection)
         {
             return _rigidbody2D.position + Speed * Time.fixedDeltaTime * movementDirection;
         }
 
-        public void MoveInDirection(Vector2 direction)
+        public void MoveInDirection(DirectionData directionData)
         {
-            _rigidbody2D.position = CalculateNextPosition(direction);
+            _rigidbody2D.position = CalculateNextPosition(directionData.Direction);
         }
 
         public void MoveInDirectionToPoint(Vector2 target)
         {
             var direction = target - (Vector2)transform.position;
-            MoveInDirection(direction);
+            var directionData = new DirectionData(direction);
+            MoveInDirection(directionData);
         }
     }
 }

@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class CoroutineHandler : ICoroutineHandler
+    public class CoroutineHandler<T> : ICoroutineHandler
     {
         public event Action CoroutineFinished;
 
         private readonly MonoBehaviour _owner;
-        private readonly ICoroutineLogic _logic;
+        private readonly ICoroutineLogic<T> _logic;
+        private readonly T _target;
 
         private Coroutine _coroutine;
 
@@ -16,32 +17,29 @@ namespace ShootEmUp
 
         public bool IsPaused { get; set; }
 
-        public CoroutineHandler(MonoBehaviour owner, ICoroutineLogic logic)
+        public CoroutineHandler(MonoBehaviour owner, ICoroutineLogic<T> logic, T target)
         {
             _owner = owner;
             _logic = logic;
+            _target = target;
+            _logic.Initialize(this, _target);
         }
 
-        public void Start(GameObject target)
+        public void Start()
         {
-            _logic.Initialize(this, target);
+            IsFinished = false;
             _coroutine = _owner.StartCoroutine(_logic.Execute());
         }
 
         public void Stop()
         {
-            if (!IsFinished)
-            {
-                IsFinished = true;
+            if (IsFinished) { return; }
 
-                if (_coroutine != null)
-                {
-                    _owner.StopCoroutine(_coroutine);
-                    _coroutine = null;
-                }
-
-                CoroutineFinished?.Invoke();
-            }
+            IsFinished = true;
+            IsPaused = false;
+            _owner.StopCoroutine(_coroutine);
+            _coroutine = null;
+            CoroutineFinished?.Invoke();
         }
     }
 }

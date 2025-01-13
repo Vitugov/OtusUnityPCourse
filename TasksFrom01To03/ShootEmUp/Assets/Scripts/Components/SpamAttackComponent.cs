@@ -17,28 +17,23 @@ namespace ShootEmUp
         public void Initialize(CoroutineManager coroutineManager, GameObject target)
         {
             _coroutineManager = coroutineManager;
-            ChangeTarget(target);
-            CreateFireHandler(_coroutineManager);
-        }
-
-        public void ChangeTarget(GameObject target)
-        {
             _target = target;
             _targetHitPoints = target.GetComponent<IHitPoints>();
+            _fireHandler = GetFireHandler(_coroutineManager);
         }
 
-        public void StartFire() => _coroutineManager.StartCoroutine(_fireHandler, gameObject);
+        public void StartFire() => _coroutineManager.StartCoroutine(_fireHandler); 
 
-        public void StopFire() => _coroutineManager.StopCoroutine(_fireHandler);
+        public void StopFire() => _coroutineManager.StopCoroutineIfRunning(_fireHandler);
 
         private void Fire() => FireEvent?.Invoke(_target.transform);
 
-        private void CreateFireHandler(CoroutineManager coroutineManager)
+        private ICoroutineHandler GetFireHandler(CoroutineManager coroutineManager)
         {
-            var logic = new ConditionalCoroutineLogic(ShouldFire, _countdown, Fire, false);
-            _fireHandler = coroutineManager.GetCoroutineHandler(logic);
-        }
+            var logic = new ConditionalCoroutineLogic<IHitPoints>(ShouldFire, _countdown, Fire, false);
+            return coroutineManager.GetCoroutineHandler(logic, _targetHitPoints);
 
-        private bool ShouldFire(GameObject gameObject) => _targetHitPoints.IsHitPointsExists();
+            bool ShouldFire(IHitPoints hitPointsComponent) => hitPointsComponent.IsHitPointsExists();
+        }
     }
 }

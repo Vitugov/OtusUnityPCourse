@@ -20,7 +20,7 @@ namespace ShootEmUp
         public void Fire(Vector2 direction)
         {
             BulletArgs bulletArgs = new(Position, direction);
-            _bulletManager.CreateBullet(_bulletConfig, bulletArgs);
+            _bulletManager.SpawnBullet(_bulletConfig, bulletArgs);
         }
 
         public void Fire(Transform target)

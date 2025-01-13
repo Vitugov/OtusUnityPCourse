@@ -22,29 +22,29 @@ namespace ShootEmUp
         {
             _isActive = true;
             _coroutineManager = coroutineManager;
-            var moveCoroutineLogic = new ActionCoroutineLogic(gameObject => _moveComponent.MoveInDirectionToPoint(destination));
-            _toDestinationMover = _coroutineManager.GetCoroutineHandler(moveCoroutineLogic);
+            var moveCoroutineLogic = new ActionCoroutineLogic<MoveComponent>(moveComponent => moveComponent.MoveInDirectionToPoint(destination));
+            _toDestinationMover = _coroutineManager.GetCoroutineHandler(moveCoroutineLogic, _moveComponent);
 
-            var checkCoroutineLogick = new ConditionalCoroutineLogic(IsDesinationAchieved, CHECK_INTERVAL, DestinationIsReached, true);
-            _destinationAchievedChecker = _coroutineManager.GetCoroutineHandler(checkCoroutineLogick);
+            var checkCoroutineLogick = new ConditionalCoroutineLogic<MoveComponent>(IsDesinationAchieved, CHECK_INTERVAL, DestinationIsReached, true);
+            _destinationAchievedChecker = _coroutineManager.GetCoroutineHandler(checkCoroutineLogick, _moveComponent);
 
-            bool IsDesinationAchieved(GameObject obj) => ((Vector2)transform.position - destination).magnitude < TRESHHOLD;
+            bool IsDesinationAchieved(MoveComponent moveComponent) => (moveComponent.Position - destination).magnitude < TRESHHOLD;
         }
 
         public void StartMove()
         {
-            _coroutineManager.StartCoroutine(_toDestinationMover, gameObject);
-            _coroutineManager.StartCoroutine(_destinationAchievedChecker, gameObject);
+            _coroutineManager.StartCoroutine(_toDestinationMover);
+            _coroutineManager.StartCoroutine(_destinationAchievedChecker);
         }
 
         public void StopMove()
         {
             if (_isActive)
             {
-                _coroutineManager.StopCoroutine(_toDestinationMover);
+                _coroutineManager.StopCoroutineIfRunning(_toDestinationMover);
                 _toDestinationMover = null;
 
-                _coroutineManager.StopCoroutine(_destinationAchievedChecker);
+                _coroutineManager.StopCoroutineIfRunning(_destinationAchievedChecker);
                 _destinationAchievedChecker = null;
                 _isActive = false;
             }

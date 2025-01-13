@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -6,39 +7,36 @@ namespace ShootEmUp
     public sealed class CoroutineManager : MonoBehaviour
     {
         private MonoBehaviour _coroutineOwner;
-        private readonly HashSet<ICoroutineHandler> _coroutineHandlers;
+        private HashSet<ICoroutineHandler> _coroutineHandlers;
 
         public IReadOnlyCollection<ICoroutineHandler> CoroutineHandlers => _coroutineHandlers;
 
-        public CoroutineManager()
+        public void Awake()
         {
             _coroutineOwner = this;
             _coroutineHandlers = new();
         }
 
-        public ICoroutineHandler GetCoroutineHandler(ICoroutineLogic coroutineLogic)
+        public ICoroutineHandler GetCoroutineHandler<T>(ICoroutineLogic<T> coroutineLogic, T target)
+            => new CoroutineHandler<T>(_coroutineOwner, coroutineLogic, target);
+
+        public void StartCoroutine(ICoroutineHandler conditionHandler)
         {
-            var conditionHandler = new CoroutineHandler(_coroutineOwner, coroutineLogic);
-            conditionHandler.CoroutineFinished += () => ExcludeCoroutine(conditionHandler);
+            if (_coroutineHandlers.Contains(conditionHandler))
+                throw new ArgumentException("You are trying to start coroutine twice");
+
+            conditionHandler.CoroutineFinished += () => StopCoroutineIfRunning(conditionHandler);
             _coroutineHandlers.Add(conditionHandler);
-            return conditionHandler;
+            conditionHandler.Start();
         }
 
-        public void StartCoroutine(ICoroutineHandler conditionHandler, GameObject target)
+        public void StopCoroutineIfRunning(ICoroutineHandler conditionHandler)
         {
-            conditionHandler.Start(target);
-        }
+            if (!_coroutineHandlers.Contains(conditionHandler)) { return; }
 
-        public void StopCoroutine(ICoroutineHandler conditionHandler)
-        {
-            ExcludeCoroutine(conditionHandler);
-            conditionHandler?.Stop();
-        }
-
-        private void ExcludeCoroutine(ICoroutineHandler conditionHandler)
-        {
-            conditionHandler.CoroutineFinished -= () => ExcludeCoroutine(conditionHandler);
+            conditionHandler.CoroutineFinished -= () => StopCoroutineIfRunning(conditionHandler);
             _coroutineHandlers.Remove(conditionHandler);
+            conditionHandler?.Stop();
         }
     }
 }

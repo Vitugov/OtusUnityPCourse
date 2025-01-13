@@ -17,11 +17,11 @@ namespace ShootEmUp
 
         public void RunSpawner()
         {
-            var coroutineLogic = new ConditionalCoroutineLogic(predicate, 1f, _enemyManager.SpawnEnemy, false);
-            _spawnerCoroutine = _coroutineManager.GetCoroutineHandler(coroutineLogic);
-            _coroutineManager.StartCoroutine(_spawnerCoroutine, gameObject);
+            var coroutineLogic = new ConditionalCoroutineLogic<EnemyManager>(predicate, 1f, _enemyManager.SpawnEnemy, false);
+            _spawnerCoroutine = _coroutineManager.GetCoroutineHandler(coroutineLogic, _enemyManager);
+            _coroutineManager.StartCoroutine(_spawnerCoroutine);
 
-            bool predicate(GameObject obj) => _enemyManager.ActiveEnemyCount < _maxActiveEnemyCount;
+            bool predicate(EnemyManager enemyManager) => enemyManager.ActiveEnemyCount < _maxActiveEnemyCount;
         }
 
         public void StopSpawner()

@@ -14,20 +14,10 @@ namespace ShootEmUp
         private void Awake()
         {
             _characterInitializer.Initialize(_character);
-        }
-
-        private void OnEnable()
-        {
+            
             _inputManager.DirectionKeyPressed += OnMove;
             _inputManager.SpacePressed += OnFire;
             _character.OnDeath += OnCharacterDeath;
-        }
-
-        private void OnDisable()
-        {
-            _inputManager.DirectionKeyPressed -= OnMove;
-            _inputManager.SpacePressed -= OnFire;
-            _character.OnDeath -= OnCharacterDeath;
         }
 
         private void OnDestroy()
@@ -36,6 +26,10 @@ namespace ShootEmUp
             {
                 _character.Deinitialize();
             }
+            
+            _inputManager.DirectionKeyPressed -= OnMove;
+            _inputManager.SpacePressed -= OnFire;
+            _character.OnDeath -= OnCharacterDeath;
         }
 
         private void OnMove(Vector2 direction) => _character.Move(direction);

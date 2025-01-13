@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 namespace ShootEmUp
 {
@@ -7,7 +6,7 @@ namespace ShootEmUp
     {
         event Action CoroutineFinished;
         public bool IsPaused { get; set; }
-        void Start(GameObject target);
+        void Start();
         void Stop();
     }
 }

@@ -5,7 +5,7 @@ namespace ShootEmUp
     public sealed class MoveWithRestrictions : MonoBehaviour
     {
         [SerializeField] private MoveComponent _moveComponent;
-        
+
         private IRestrictor _restrictor;
 
         public void Initialize(IRestrictor restrictor)

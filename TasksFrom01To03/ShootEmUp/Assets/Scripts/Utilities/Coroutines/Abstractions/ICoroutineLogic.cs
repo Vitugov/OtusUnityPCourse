@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using UnityEngine;
 
 namespace ShootEmUp
 {
-    public interface ICoroutineLogic
+    public interface ICoroutineLogic<T>
     {
-        void Initialize(ICoroutineHandler handler, GameObject target);
+        void Initialize(ICoroutineHandler handler, T target);
         IEnumerator Execute();
     }
 }

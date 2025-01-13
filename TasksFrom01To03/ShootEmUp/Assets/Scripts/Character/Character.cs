@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Character : MonoBehaviour, IReloadable
+    public sealed class Character : MonoBehaviour, IResettable
     {
         public event Action OnDeath;
 
@@ -21,7 +21,7 @@ namespace ShootEmUp
             _hitPointsComponent.HpEmpty += OnCharacterDeath;
         }
 
-        public void Reload()
+        void IResettable.Reset()
         {
             LoadCharacterInitialState();
         }
