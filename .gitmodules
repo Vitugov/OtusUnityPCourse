@@ -1,0 +1,3 @@
+[submodule "TasksFrom01To03/ShootEmUp/Assets/Plugins/Zenject"]
+	path = TasksFrom01To03/ShootEmUp/Assets/Plugins/Zenject
+	url = https://github.com/Vitugov/Zenject.git
